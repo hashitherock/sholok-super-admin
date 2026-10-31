@@ -9,6 +9,8 @@ export const Route = createFileRoute("/")({
       { name: "description", content: "Central administration overview for the Sholok digital services ecosystem." },
       { property: "og:title", content: "Overview — Sholok Super Admin" },
       { property: "og:description", content: "Central administration overview for the Sholok digital services ecosystem." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Index,
