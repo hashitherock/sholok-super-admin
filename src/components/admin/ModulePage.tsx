@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { CheckCircle2, Clock } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import type { NavGroup, NavItem } from "@/lib/nav-registry";
+import { navLink, type NavGroup, type NavItem } from "@/lib/nav-registry";
 
 export function ModulePage({ group, item }: { group: NavGroup; item: NavItem }) {
   const siblings = group.items.filter((i) => i.path !== item.path).slice(0, 6);
@@ -16,7 +16,7 @@ export function ModulePage({ group, item }: { group: NavGroup; item: NavItem }) 
           <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
             {group.title} · #{item.num}
           </p>
-          <h1 className="font-display text-2xl font-bold sm:text-3xl">{item.title}</h1>
+          <h1 className="break-words font-display text-2xl font-bold sm:text-3xl">{item.title}</h1>
           <p className="mt-1 text-muted-foreground">{item.description}</p>
           <div className="mt-3 flex flex-wrap gap-2">
             {item.serviceId && <Badge variant="outline">Service ID: {item.serviceId}</Badge>}
@@ -51,7 +51,7 @@ export function ModulePage({ group, item }: { group: NavGroup; item: NavItem }) 
             <ul className="space-y-1">
               {siblings.map((s) => (
                 <li key={s.path}>
-                  <Link to={s.path} className="flex items-center gap-2 rounded-md px-2 py-1.5 text-sm hover:bg-muted focus-visible:outline-2 focus-visible:outline-ring">
+                   <Link {...navLink(s.path)} className="flex items-center gap-2 rounded-md px-2 py-1.5 text-sm hover:bg-muted focus-visible:outline-2 focus-visible:outline-ring">
                     <s.icon className="size-4 text-muted-foreground" aria-hidden /> {s.title}
                   </Link>
                 </li>

@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import { AppSidebar } from "./AppSidebar";
-import { navGroups } from "@/lib/nav-registry";
+import { navGroups, navLink } from "@/lib/nav-registry";
 
 function Crumbs() {
   const { pathname } = useLocation();
@@ -22,7 +22,7 @@ function Crumbs() {
         {group && item && (
           <>
             <BreadcrumbSeparator className="hidden sm:block" />
-            <BreadcrumbItem className="hidden sm:inline-flex">{group.title}</BreadcrumbItem>
+            <BreadcrumbItem className="hidden sm:inline-flex"><BreadcrumbLink asChild><Link {...navLink(group.items[0].path)}>{group.title}</Link></BreadcrumbLink></BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem><BreadcrumbPage className="truncate">{item.title}</BreadcrumbPage></BreadcrumbItem>
           </>
@@ -41,7 +41,7 @@ export function AdminLayout({ children }: { children: ReactNode }) {
           <SidebarTrigger aria-label="Toggle navigation" />
           <div className="min-w-0 flex-1"><Crumbs /></div>
           <Button variant="ghost" size="icon" asChild aria-label="Notifications">
-            <Link to="/operations/notifications"><Bell /></Link>
+            <Link {...navLink("/operations/notifications")}><Bell /></Link>
           </Button>
           <div className="grid size-8 place-items-center rounded-full bg-secondary text-xs font-semibold text-secondary-foreground" aria-label="Signed in as Super Admin">SA</div>
         </header>
