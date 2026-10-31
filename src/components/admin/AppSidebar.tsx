@@ -6,26 +6,23 @@ import {
   SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarFooter, SidebarInput, useSidebar,
 } from "@/components/ui/sidebar";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { navGroups } from "@/lib/nav-registry";
+import { filterNav, navLink } from "@/lib/nav-registry";
 
 export function AppSidebar() {
   const { pathname } = useLocation();
-  const { state, setOpenMobile } = useSidebar();
+  const { state, isMobile, setOpenMobile } = useSidebar();
   const [q, setQ] = useState("");
-  const collapsed = state === "collapsed";
+  const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({});
+  const collapsed = state === "collapsed" && !isMobile;
 
   const filtered = useMemo(() => {
-    const s = q.trim().toLowerCase();
-    if (!s) return navGroups;
-    return navGroups
-      .map((g) => ({ ...g, items: g.items.filter((i) => i.title.toLowerCase().includes(s)) }))
-      .filter((g) => g.items.length);
+    return filterNav(q);
   }, [q]);
 
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader>
-        <Link to="/" className="flex items-center gap-2 px-1 py-1.5" aria-label="Sholok home">
+        <Link to="/" onClick={() => setOpenMobile(false)} className="flex items-center gap-2 px-1 py-1.5" aria-label="Sholok home">
           <span className="brand-mark grid size-8 shrink-0 place-items-center rounded-lg font-display text-lg font-bold">S</span>
           {!collapsed && (
             <span className="leading-tight">
@@ -47,26 +44,26 @@ export function AppSidebar() {
           </div>
         )}
       </SidebarHeader>
-      <SidebarContent>
+      <SidebarContent role="navigation" aria-label="Administration">
         {filtered.length === 0 && <p className="px-4 py-2 text-sm text-sidebar-foreground/60">No matches</p>}
         {filtered.map((g) => {
           const hasActive = g.items.some((i) => i.path === pathname);
           return (
-            <Collapsible key={g.id} defaultOpen={hasActive || g.id === "dashboard" || !!q} className="group/collapsible">
+            <Collapsible key={`${g.id}:${pathname}`} open={collapsed || !!q.trim() || (openGroups[`${g.id}:${pathname}`] ?? (hasActive || g.id === "dashboard"))} onOpenChange={(open) => setOpenGroups((prev) => ({ ...prev, [`${g.id}:${pathname}`]: open }))} className="group/collapsible">
               <SidebarGroup>
-                <SidebarGroupLabel asChild>
-                  <CollapsibleTrigger className="w-full">
+                {!collapsed && <SidebarGroupLabel asChild>
+                  <CollapsibleTrigger className="w-full" aria-label={g.title}>
                     {g.title}
                     <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
                   </CollapsibleTrigger>
-                </SidebarGroupLabel>
+                </SidebarGroupLabel>}
                 <CollapsibleContent>
                   <SidebarGroupContent>
                     <SidebarMenu>
                       {g.items.map((i) => (
                         <SidebarMenuItem key={i.path}>
                           <SidebarMenuButton asChild isActive={pathname === i.path} tooltip={i.title}>
-                            <Link to={i.path} onClick={() => setOpenMobile(false)}>
+                            <Link {...navLink(i.path)} aria-current={pathname === i.path ? "page" : undefined} onClick={() => setOpenMobile(false)}>
                               <i.icon />
                               <span>{i.title}</span>
                             </Link>

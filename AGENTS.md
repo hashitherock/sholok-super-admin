@@ -12,3 +12,4 @@
 ## Architecture rules
 - All 61 admin navigation destinations come from the single registry in `src/lib/nav-registry.ts`; sidebar, breadcrumbs, titles and the `/$group/$page` route read from it so paths never drift.
 - The app is frontend-only (browser-local data, no backend) per the project brief; never present simulated actions as real.
+- Use registry-derived typed link options for the existing dynamic route, and shared route boundaries for missing destinations and load errors; this preserves published URLs and consistent recovery.

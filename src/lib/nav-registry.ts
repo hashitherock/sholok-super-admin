@@ -137,6 +137,23 @@ export const navGroups: NavGroup[] = groups.map((g) => ({
 
 export const navItems: NavItem[] = navGroups.flatMap((g) => g.items);
 
+export function navLink(path: string) {
+  if (path === "/") return { to: "/" as const };
+  const [, group, page] = path.split("/");
+  return { to: "/$group/$page" as const, params: { group, page } };
+}
+
+export function filterNav(query: string): NavGroup[] {
+  const term = query.trim().toLowerCase();
+  if (!term) return navGroups;
+  return navGroups.map((group) => ({
+    ...group,
+    items: group.items.filter((item) =>
+      `${group.title} ${item.title} ${item.serviceId ?? ""}`.toLowerCase().includes(term),
+    ),
+  })).filter((group) => group.items.length > 0);
+}
+
 export function findNav(group: string, page: string) {
   const g = navGroups.find((x) => x.id === group);
   const item = g?.items.find((i) => i.id === page);
