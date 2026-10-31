@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { CheckCircle2, Clock } from "lucide-react";
+import { SlidersHorizontal, Clock } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { navLink, type NavGroup, type NavItem } from "@/lib/nav-registry";
@@ -30,12 +30,12 @@ export function ModulePage({ group, item }: { group: NavGroup; item: NavItem }) 
 
       <div className="grid gap-6 lg:grid-cols-3">
         <Card className="lg:col-span-2">
-          <CardHeader><CardTitle className="text-base">Planned capabilities</CardTitle></CardHeader>
+          <CardHeader><CardTitle className="text-base">{item.title} · Planned controls</CardTitle></CardHeader>
           <CardContent>
             <ul className="grid gap-3 sm:grid-cols-2">
               {item.capabilities.map((c) => (
                 <li key={c} className="flex gap-2 rounded-lg border bg-muted/40 p-3 text-sm">
-                  <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden />
+                  <SlidersHorizontal className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden />
                   <span>{c}</span>
                 </li>
               ))}

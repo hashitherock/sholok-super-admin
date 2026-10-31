@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ModulePage } from "@/components/admin/ModulePage";
 import { navGroups } from "@/lib/nav-registry";
+import { AdminNotFound } from "@/components/admin/RouteBoundaries";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -18,5 +19,7 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   const group = navGroups[0];
-  return <ModulePage group={group} item={group.items[0]} />;
+  const item = group?.items[0];
+  if (!group || !item) return <AdminNotFound />;
+  return <ModulePage group={group} item={item} />;
 }

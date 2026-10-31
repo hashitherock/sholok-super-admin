@@ -22,7 +22,7 @@ function Crumbs() {
         {group && item && (
           <>
             <BreadcrumbSeparator className="hidden sm:block" />
-            <BreadcrumbItem className="hidden sm:inline-flex"><BreadcrumbLink asChild><Link {...navLink(group.items[0].path)}>{group.title}</Link></BreadcrumbLink></BreadcrumbItem>
+            <BreadcrumbItem className="hidden sm:inline-flex">{group.title}</BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem><BreadcrumbPage className="truncate">{item.title}</BreadcrumbPage></BreadcrumbItem>
           </>
@@ -45,7 +45,7 @@ export function AdminLayout({ children }: { children: ReactNode }) {
           </Button>
           <div className="grid size-8 place-items-center rounded-full bg-secondary text-xs font-semibold text-secondary-foreground" aria-label="Signed in as Super Admin">SA</div>
         </header>
-        <main className="min-w-0 flex-1 p-4 sm:p-6 lg:p-8">{children}</main>
+        <div className="min-w-0 flex-1 p-4 sm:p-6 lg:p-8">{children}</div>
       </SidebarInset>
     </SidebarProvider>
   );

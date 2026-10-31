@@ -44,19 +44,19 @@ export function AppSidebar() {
           </div>
         )}
       </SidebarHeader>
-      <SidebarContent>
+      <SidebarContent role="navigation" aria-label="Administration">
         {filtered.length === 0 && <p className="px-4 py-2 text-sm text-sidebar-foreground/60">No matches</p>}
         {filtered.map((g) => {
           const hasActive = g.items.some((i) => i.path === pathname);
           return (
             <Collapsible key={`${g.id}:${pathname}`} open={collapsed || !!q.trim() || (openGroups[`${g.id}:${pathname}`] ?? (hasActive || g.id === "dashboard"))} onOpenChange={(open) => setOpenGroups((prev) => ({ ...prev, [`${g.id}:${pathname}`]: open }))} className="group/collapsible">
               <SidebarGroup>
-                <SidebarGroupLabel asChild>
+                {!collapsed && <SidebarGroupLabel asChild>
                   <CollapsibleTrigger className="w-full" aria-label={g.title}>
                     {g.title}
                     <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
                   </CollapsibleTrigger>
-                </SidebarGroupLabel>
+                </SidebarGroupLabel>}
                 <CollapsibleContent>
                   <SidebarGroupContent>
                     <SidebarMenu>

@@ -1,4 +1,4 @@
-import { createFileRoute, notFound } from "@tanstack/react-router";
+import { createFileRoute, notFound, redirect } from "@tanstack/react-router";
 import { ModulePage } from "@/components/admin/ModulePage";
 import { findNav } from "@/lib/nav-registry";
 import { AdminNotFound, AdminRouteError } from "@/components/admin/RouteBoundaries";
@@ -6,7 +6,8 @@ import { AdminNotFound, AdminRouteError } from "@/components/admin/RouteBoundari
 export const Route = createFileRoute("/$group/$page")({
   loader: ({ params }) => {
     const found = findNav(params.group, params.page);
-    if (!found || found.item.path === "/") throw notFound();
+    if (!found) throw notFound();
+    if (found.item.path === "/") throw redirect({ to: "/", statusCode: 301 });
     return { group: params.group, page: params.page };
   },
   head: ({ params }) => {
