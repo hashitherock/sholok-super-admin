@@ -13,6 +13,7 @@ export const getRouter = () => {
     defaultPreloadStaleTime: 0,
     defaultErrorComponent: AdminRouteError,
     defaultNotFoundComponent: AdminNotFound,
+    notFoundMode: "root",
   });
 
   return router;
