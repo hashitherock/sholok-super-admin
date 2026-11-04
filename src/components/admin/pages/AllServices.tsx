@@ -62,8 +62,8 @@ function EditDialog({ s, onClose }: { s: Service; onClose: () => void }) {
         <DialogHeader><DialogTitle>Edit {s.name}</DialogTitle><DialogDescription>Service ID {s.id} and name are fixed. Changes are saved in this browser only.</DialogDescription></DialogHeader>
         <form onSubmit={submit} className="space-y-3" noValidate>
           <div className="space-y-1.5"><Label htmlFor="desc">Description</Label>
-            <Textarea id="desc" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} aria-invalid={!!errors.description} />
-            {errors.description && <p className="text-xs text-destructive">{errors.description}</p>}</div>
+            <Textarea id="desc" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} aria-invalid={!!errors["description"]} />
+            {errors["description"] && <p className="text-xs text-destructive">{errors["description"]}</p>}</div>
           <div className="grid gap-3 sm:grid-cols-2">{field("owner", "Owner team")}{field("version", "Version")}</div>
           <div className="grid gap-3 sm:grid-cols-2">
             <div className="space-y-1.5"><Label>Status</Label>

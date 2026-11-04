@@ -74,6 +74,6 @@ describe("services list and reports", () => {
   });
   it("exports CSV with escaped values", () => {
     expect(toCsv([{ a: "x,y", b: 1 }])).toBe('a,b\n"x,y",1');
-    expect(reportTemplates.services!.rows(createSampleData(), 30)).toHaveLength(20);
+    expect(reportTemplates["services"]!.rows(createSampleData(), 30)).toHaveLength(20);
   });
 });
