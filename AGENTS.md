@@ -13,3 +13,5 @@
 - All 61 admin navigation destinations come from the single registry in `src/lib/nav-registry.ts`; sidebar, breadcrumbs, titles and the `/$group/$page` route read from it so paths never drift.
 - The app is frontend-only (browser-local data, no backend) per the project brief; never present simulated actions as real.
 - Use registry-derived typed link options for the existing dynamic route, and shared route boundaries for missing destinations and load errors; this preserves published URLs and consistent recovery.
+- Browser-local records live in one versioned, zod-validated envelope in `src/lib/admin-store.ts`; pages read it via `useAdminStore` and write only through `updateData`, so invalid or corrupt data never reaches the UI.
+- Functional pages are mapped by registry path in `src/components/admin/pages/registry.tsx`; unmapped destinations keep the planned-controls `ModulePage`.
