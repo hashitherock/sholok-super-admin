@@ -45,7 +45,7 @@ export function Reports() {
   const log = (format: "csv" | "json") => {
     const reportName = name.trim() || `${label} (${days} days)`;
     updateData((d) => ({ ...d, reportRuns: [{ id: uid(), name: reportName, format, rows: rows.length, createdAt: new Date().toISOString() }, ...d.reportRuns].slice(0, 50) }));
-    return reportName.replace(/\W+/g, "-").toLowerCase();
+    return reportName.replace(/\W+/g, "-").replace(/^-|-$/g, "").toLowerCase();
   };
   const exportAs = (format: "csv" | "json") => {
     if (!rows.length) { toast.error("Nothing to export for this selection."); return; }
