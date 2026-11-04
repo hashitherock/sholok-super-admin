@@ -34,7 +34,7 @@ export function ChartCard({ title, data, kind = "area", format }: { title: strin
               <AreaChart data={data}>
                 <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
                 <XAxis dataKey="label" fontSize={11} stroke="var(--muted-foreground)" />
-                <YAxis fontSize={11} stroke="var(--muted-foreground)" width={44} tickFormatter={format} />
+                <YAxis fontSize={11} stroke="var(--muted-foreground)" width={44} {...(format ? { tickFormatter: format } : {})} />
                 <Tooltip formatter={(v: number) => (format ? format(v) : v)} />
                 <Area dataKey="value" name={title} stroke="var(--chart-1)" fill="var(--chart-1)" fillOpacity={0.15} />
               </AreaChart>
@@ -42,7 +42,7 @@ export function ChartCard({ title, data, kind = "area", format }: { title: strin
               <BarChart data={data}>
                 <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
                 <XAxis dataKey="label" fontSize={11} stroke="var(--muted-foreground)" />
-                <YAxis fontSize={11} stroke="var(--muted-foreground)" width={44} tickFormatter={format} />
+                <YAxis fontSize={11} stroke="var(--muted-foreground)" width={44} {...(format ? { tickFormatter: format } : {})} />
                 <Tooltip formatter={(v: number) => (format ? format(v) : v)} />
                 <Bar dataKey="value" name={title} fill="var(--chart-2)" radius={[4, 4, 0, 0]} />
               </BarChart>
