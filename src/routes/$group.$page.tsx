@@ -1,5 +1,6 @@
 import { createFileRoute, notFound, redirect } from "@tanstack/react-router";
 import { ModulePage } from "@/components/admin/ModulePage";
+import { functionalPages } from "@/components/admin/pages/registry";
 import { findNav } from "@/lib/nav-registry";
 import { AdminNotFound, AdminRouteError } from "@/components/admin/RouteBoundaries";
 
@@ -34,5 +35,7 @@ function Page() {
   const { group, page } = Route.useLoaderData();
   const f = findNav(group, page);
   if (!f) return <AdminNotFound />;
+  const Functional = functionalPages[f.item.path];
+  if (Functional) return <Functional />;
   return <ModulePage group={f.group} item={f.item} />;
 }
